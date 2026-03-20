@@ -426,3 +426,23 @@ body {
         flex-direction: column;
     }
 }
+
+/* Mouse Particles */
+.mouse-particle {
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+    z-index: 9999;
+    animation: particle-anim 1s ease-out forwards;
+}
+
+@keyframes particle-anim {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+    }
+}

@@ -46,15 +46,23 @@ const standardDebug = [
 const modelParams = {
     linear_regression: [
         ['lr', 'float', 'Learning rate'],
-        ['epochs', 'int', 'Iterations'],
-        ['out_loss', 'bool', 'Show loss'],
-        ['out_gradient', 'bool', 'Show gradients'],
-        ['out_update', 'bool', 'Show updates']
+        ['epochs', 'int', 'Total training iterations'],
+        ['out_loss', 'bool', 'Show training loss'],
+        ['out_gradient', 'bool', 'Show gradients during backprop'],
+        ['out_update', 'bool', 'Show weight updates'],
+        ['out_epoch', 'bool', 'Show epoch progress info'],
+        ['loss_step', 'int', 'Steps between loss logging'],
+        ['loss_csv', 'bool', 'Save loss to CSV file']
     ],
     logistic_regression: [
         ['lr', 'float', 'Learning rate'],
-        ['epochs', 'int', 'Iterations'],
-        ['out_loss', 'bool', 'Show loss']
+        ['epochs', 'int', 'Total training iterations'],
+        ['out_loss', 'bool', 'Show training loss'],
+        ['out_gradient', 'bool', 'Show gradients during backprop'],
+        ['out_update', 'bool', 'Show weight updates'],
+        ['out_epoch', 'bool', 'Show epoch progress info'],
+        ['loss_step', 'int', 'Steps between loss logging'],
+        ['loss_csv', 'bool', 'Save loss to CSV file']
     ],
     knn: [
         ['k', 'int', 'Number of neighbors'],
@@ -64,23 +72,31 @@ const modelParams = {
         ['out_loss', 'bool', 'Show error']
     ],
     decision_tree: [
-        ['max_depth', 'int', 'Max depth of tree'],
-        ['min_samples_split', 'int', 'Min samples to split'],
-        ['min_samples_leaf', 'int', 'Min samples per leaf'],
+        ['criterion', 'str', "'gini' (Class) or 'mse' (Reg)"],
+        ['max_depth', 'int / None', 'Maximum depth of the tree'],
+        ['min_samples_split', 'int', 'Min samples to split internal node (def: 2)'],
+        ['min_samples_leaf', 'int', 'Min samples per leaf (def: 1)'],
+        ['max_features', 'int / None', 'Max features to consider for best split'],
+        ['ccp_alpha', 'float', 'Complexity parameter for pruning (def: 0.0)'],
+        ['splitter', 'str', "Split strategy, e.g., 'best'"],
+        ['random_state', 'int / None', 'Seed for randomness'],
         ['loss', 'bool', 'Show training loss'],
-        ['loss_csv', 'bool', 'Save loss to CSV'],
-        ['errors', 'bool', 'Show prediction errors'],
-        ['errors_csv', 'bool', 'Save errors to CSV']
+        ['loss_csv', 'bool', 'Save training process to CSV'],
+        ['errors', 'bool', 'Print prediction errors'],
+        ['errors_csv', 'bool', 'Save prediction errors to CSV']
     ],
     random_forest: [
-        ['n_trees', 'int', 'Number of trees'],
-        ['max_depth', 'int', 'Max depth'],
-        ['max_features', 'int', 'Features per split'],
-        ['out_tree_train', 'bool', 'Show training per tree'],
-        ['out_vote', 'bool', 'Show voting (classification)'],
-        ['vote_csv', 'bool', 'Save votes to CSV'],
-        ['out_value', 'bool', 'Show averaging (regression)'],
-        ['value_csv', 'bool', 'Save regression values']
+        ['n_trees', 'int', 'Number of trees (def: 10)'],
+        ['max_depth', 'int / None', 'Max depth of each tree'],
+        ['min_samples_split', 'int', 'Min samples to split (def: 2)'],
+        ['min_samples_leaf', 'int', 'Min samples per leaf (def: 1)'],
+        ['max_features', 'int / None', 'Features per split'],
+        ['random_state', 'int / None', 'Seed for randomness'],
+        ['out_tree_train', 'bool', 'Show training process of each tree'],
+        ['out_vote', 'bool', 'Show voting process (Classification)'],
+        ['vote_csv', 'bool', 'Save votes to CSV (Classification)'],
+        ['out_value', 'bool', 'Show averaging process (Regression)'],
+        ['value_csv', 'bool', 'Save regression outputs to CSV (Regression)']
     ],
     kmeans: [
         ['k', 'int', 'Number of clusters'],
@@ -193,6 +209,10 @@ print("R2 Score:", score)</code></pre>
 classifier = KNNClassification(k=5, ...)
 regressor = KNNRegression(k=5, ...)</code></pre>
         <div id="dynamic-params"></div>
+        <h2>Methods</h2>
+        <div class="method-block"><h4>fit(X, y)</h4><p>Store the training data.</p></div>
+        <div class="method-block"><h4>predict(X)</h4><p>Predict targets by finding the k-nearest neighbors.</p></div>
+        <div class="method-block"><h4>score(X, y)</h4><p>Return the accuracy or R2 score.</p></div>
     `,
     decision_tree: `
         <h1>DecisionTree (Classification & Regression)</h1>
@@ -202,6 +222,10 @@ regressor = KNNRegression(k=5, ...)</code></pre>
 classifier = DecisionTreeClassification(max_depth=None, ...)
 regressor = DecisionTreeRegression(max_depth=None, ...)</code></pre>
         <div id="dynamic-params"></div>
+        <h2>Methods</h2>
+        <div class="method-block"><h4>fit(X, y)</h4><p>Build the tree recursively from the training set.</p></div>
+        <div class="method-block"><h4>predict(X)</h4><p>Predict classes or values for X.</p></div>
+        <div class="method-block"><h4>score(X, y)</h4><p>Return the accuracy or R2 score.</p></div>
     `,
     random_forest: `
         <h1>RandomForest (Classification & Regression)</h1>
@@ -211,18 +235,29 @@ regressor = DecisionTreeRegression(max_depth=None, ...)</code></pre>
 classifier = RandomForestClassification(n_trees=10, ...)
 regressor = RandomForestRegression(n_trees=10, ...)</code></pre>
         <div id="dynamic-params"></div>
+        <h2>Methods</h2>
+        <div class="method-block"><h4>fit(X, y)</h4><p>Build a forest of trees from the training set.</p></div>
+        <div class="method-block"><h4>predict(X)</h4><p>Predict class or regression value for X.</p></div>
+        <div class="method-block"><h4>score(X, y)</h4><p>Return the accuracy or R2 score.</p></div>
     `,
     kmeans: `
         <h1>Kmean</h1>
         <p>K-Means clustering algorithm determining clusters iteratively by finding centroids.</p>
         <pre><code class="language-python">Kmean(k=3, max_iter=300, ...)</code></pre>
         <div id="dynamic-params"></div>
+        <h2>Methods</h2>
+        <div class="method-block"><h4>fit(X)</h4><p>Compute k-means clustering.</p></div>
+        <div class="method-block"><h4>predict(X)</h4><p>Predict the closest cluster each sample in X belongs to.</p></div>
     `,
     neural_network: `
         <h1>NeuralNetwork</h1>
         <p>A simple multi-layer perceptron (MLP) built purely with numpy arrays, capable of backpropagation.</p>
         <pre><code class="language-python">NeuralNetwork(layers=[2, 64, 1], lr=0.01, ...)</code></pre>
         <div id="dynamic-params"></div>
+        <h2>Methods</h2>
+        <div class="method-block"><h4>fit(X, y)</h4><p>Train the neural network using backpropagation.</p></div>
+        <div class="method-block"><h4>predict(X)</h4><p>Predict using the trained network.</p></div>
+        <div class="method-block"><h4>score(X, y)</h4><p>Return the accuracy or R2 score depending on the task.</p></div>
     `
 };
 
@@ -302,6 +337,10 @@ print("R2 Score:", score)</code></pre>
 classifier = KNNClassification(k=5, ...)
 regressor = KNNRegression(k=5, ...)</code></pre>
         <div id="dynamic-params"></div>
+        <h2>Phương thức</h2>
+        <div class="method-block"><h4>fit(X, y)</h4><p>Lưu trữ dữ liệu huấn luyện.</p></div>
+        <div class="method-block"><h4>predict(X)</h4><p>Dự đoán nhãn hoặc giá trị bằng cách tìm k láng giềng gần nhất.</p></div>
+        <div class="method-block"><h4>score(X, y)</h4><p>Trả về điểm đánh giá r2 score hoặc accuracy.</p></div>
     `,
     decision_tree: `
         <h1>Cây Quyết định (DecisionTree Classification & Regression)</h1>
@@ -311,6 +350,10 @@ regressor = KNNRegression(k=5, ...)</code></pre>
 classifier = DecisionTreeClassification(max_depth=None, ...)
 regressor = DecisionTreeRegression(max_depth=None, ...)</code></pre>
         <div id="dynamic-params"></div>
+        <h2>Phương thức</h2>
+        <div class="method-block"><h4>fit(X, y)</h4><p>Xây dựng cây quyết định dựa trên dữ liệu.</p></div>
+        <div class="method-block"><h4>predict(X)</h4><p>Dự đoán cho dữ liệu đầu vào X.</p></div>
+        <div class="method-block"><h4>score(X, y)</h4><p>Trả về điểm đánh giá r2 score hoặc accuracy.</p></div>
     `,
     random_forest: `
         <h1>Rừng ngẫu nhiên (RandomForest Classification & Regression)</h1>
@@ -320,18 +363,29 @@ regressor = DecisionTreeRegression(max_depth=None, ...)</code></pre>
 classifier = RandomForestClassification(n_trees=10, ...)
 regressor = RandomForestRegression(n_trees=10, ...)</code></pre>
         <div id="dynamic-params"></div>
+        <h2>Phương thức</h2>
+        <div class="method-block"><h4>fit(X, y)</h4><p>Xây dựng một rừng các cây quyết định ngẫu nhiên.</p></div>
+        <div class="method-block"><h4>predict(X)</h4><p>Dự đoán dựa trên tổng hợp (vote hoặc biểu quyết) các cây.</p></div>
+        <div class="method-block"><h4>score(X, y)</h4><p>Trả về điểm đánh giá r2 score hoặc accuracy.</p></div>
     `,
     kmeans: `
         <h1>Phân cụm K-Means (Kmean)</h1>
         <p>Thuật toán gom cụm K-Means xác định các nhóm bằng cách lặp lại việc tìm các tâm cụm (centroids).</p>
         <pre><code class="language-python">Kmean(k=3, max_iter=300, ...)</code></pre>
         <div id="dynamic-params"></div>
+        <h2>Phương thức</h2>
+        <div class="method-block"><h4>fit(X)</h4><p>Tính toán phân cụm k-means.</p></div>
+        <div class="method-block"><h4>predict(X)</h4><p>Dự đoán cụm gần nhất cho mỗi dữ liệu trong X.</p></div>
     `,
     neural_network: `
         <h1>Mạng nơ ron (NeuralNetwork)</h1>
         <p>Một Multi-layer Perceptron (MLP) đơn giản được xây hoàn toàn bằng Numpy array, hỗ trợ backpropagation.</p>
         <pre><code class="language-python">NeuralNetwork(layers=[2, 64, 1], lr=0.01, ...)</code></pre>
         <div id="dynamic-params"></div>
+        <h2>Phương thức</h2>
+        <div class="method-block"><h4>fit(X, y)</h4><p>Huấn luyện mạng nơ ron bằng thuật toán lan truyền ngược.</p></div>
+        <div class="method-block"><h4>predict(X)</h4><p>Dự đoán với mạng đã huấn luyện.</p></div>
+        <div class="method-block"><h4>score(X, y)</h4><p>Trả về điểm đánh giá r2 score hoặc accuracy.</p></div>
     `
 };
 
@@ -373,7 +427,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 tablesHtml += renderTable(mappingData, "Configuration Parameters");
             }
             // Render Standard Debug Params globally for all Models
-            tablesHtml += renderTable(standardDebug, "Standard Debug Parameters");
+            let stdTitle = currentLang === 'vi' ? 'Standard Debug Parameters ( Sắp cập nhật )' : 'Standard Debug Parameters ( Update coming soon )';
+            tablesHtml += renderTable(standardDebug, stdTitle);
 
             paramsDiv.innerHTML = tablesHtml;
         }
@@ -444,5 +499,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 sidebar.classList.remove('open');
             }
         }
+    });
+
+    // Mouse trailing particles effect
+    document.addEventListener('mousemove', function(e) {
+        // Throttle particle creation slightly
+        if (Math.random() > 0.4) return;
+        
+        const particle = document.createElement('div');
+        particle.className = 'mouse-particle';
+        
+        // Random vivid color
+        const colors = ['#FF3366', '#FF9933', '#FFCC00', '#33CC99', '#3399FF', '#9933FF', '#FF66B2'];
+        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        // Follow Cursor Position
+        particle.style.left = e.pageX + 'px';
+        particle.style.top = e.pageY + 'px';
+        
+        // Randomize size
+        const size = Math.random() * 6 + 4;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+
+        document.body.appendChild(particle);
+        
+        // Random spread target for CSS animation
+        const angle = Math.random() * Math.PI * 2;
+        const radius = Math.random() * 40 + 10;
+        particle.style.setProperty('--tx', (Math.cos(angle) * radius) + 'px');
+        particle.style.setProperty('--ty', (Math.sin(angle) * radius) + 'px');
+        
+        // Cleanup after animation finishes (1s)
+        setTimeout(() => particle.remove(), 1000);
     });
 });
