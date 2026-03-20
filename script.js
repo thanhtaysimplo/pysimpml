@@ -186,21 +186,30 @@ print("R2 Score:", score)</code></pre>
         <div class="method-block"><h4>score(X, y)</h4><p>Return the mean accuracy on the given test data.</p></div>
     `,
     knn: `
-        <h1>KNNClassification & Regression</h1>
-        <p>Models implementing the k-nearest neighbors algorithm for classification and regression.</p>
-        <pre><code class="language-python">KNNClassification(k=5, weights='uniform', ...)</code></pre>
+        <h1>K-Nearest Neighbors (Classification & Regression)</h1>
+        <p>Models implementing the k-nearest neighbors algorithm for classification (majority vote) and regression (averaging).</p>
+        <pre><code class="language-python">from pysimpml.models import KNNClassification, KNNRegression
+
+classifier = KNNClassification(k=5, ...)
+regressor = KNNRegression(k=5, ...)</code></pre>
         <div id="dynamic-params"></div>
     `,
     decision_tree: `
-        <h1>DecisionTree</h1>
+        <h1>DecisionTree (Classification & Regression)</h1>
         <p>A decision tree model building an internal node tree structure through recursion.</p>
-        <pre><code class="language-python">DecisionTreeClassification(max_depth=None, ...)</code></pre>
+        <pre><code class="language-python">from pysimpml.models import DecisionTreeClassification, DecisionTreeRegression
+
+classifier = DecisionTreeClassification(max_depth=None, ...)
+regressor = DecisionTreeRegression(max_depth=None, ...)</code></pre>
         <div id="dynamic-params"></div>
     `,
     random_forest: `
-        <h1>RandomForest</h1>
-        <p>An ensemble learning method using a multitude of decision trees.</p>
-        <pre><code class="language-python">RandomForestClassification(n_trees=10, ...)</code></pre>
+        <h1>RandomForest (Classification & Regression)</h1>
+        <p>An ensemble learning method using a multitude of decision trees for robust predictions.</p>
+        <pre><code class="language-python">from pysimpml.models import RandomForestClassification, RandomForestRegression
+
+classifier = RandomForestClassification(n_trees=10, ...)
+regressor = RandomForestRegression(n_trees=10, ...)</code></pre>
         <div id="dynamic-params"></div>
     `,
     kmeans: `
@@ -286,21 +295,30 @@ print("R2 Score:", score)</code></pre>
         <div class="method-block"><h4>score(X, y)</h4><p>Trả về độ chính xác trung bình (Accuracy).</p></div>
     `,
     knn: `
-        <h1>K-Láng giềng gần (KNNClassification & Regression)</h1>
-        <p>Mô hình triển khai thuật toán k-nearest neighbors để phân loại và hồi quy.</p>
-        <pre><code class="language-python">KNNClassification(k=5, weights='uniform', ...)</code></pre>
+        <h1>K-Láng giềng gần (KNN Classification & Regression)</h1>
+        <p>Hai mô hình triển khai thuật toán K-Nearest Neighbors để phân loại nhãn (vote) và hồi quy dự báo số nguyên (tính số trung bình).</p>
+        <pre><code class="language-python">from pysimpml.models import KNNClassification, KNNRegression
+
+classifier = KNNClassification(k=5, ...)
+regressor = KNNRegression(k=5, ...)</code></pre>
         <div id="dynamic-params"></div>
     `,
     decision_tree: `
-        <h1>Cây Quyết định (DecisionTree)</h1>
-        <p>Mô hình cây quyết định xây dựng cấu trúc node nội bộ qua đệ quy.</p>
-        <pre><code class="language-python">DecisionTreeClassification(max_depth=None, ...)</code></pre>
+        <h1>Cây Quyết định (DecisionTree Classification & Regression)</h1>
+        <p>Mô hình cây quyết định xây dựng cấu trúc node nội bộ qua đệ quy để tách cành theo Gini/Entropy (phân lớp) hoặc MSE rẽ nhánh (hồi quy).</p>
+        <pre><code class="language-python">from pysimpml.models import DecisionTreeClassification, DecisionTreeRegression
+
+classifier = DecisionTreeClassification(max_depth=None, ...)
+regressor = DecisionTreeRegression(max_depth=None, ...)</code></pre>
         <div id="dynamic-params"></div>
     `,
     random_forest: `
-        <h1>Rừng ngẫu nhiên (RandomForest)</h1>
-        <p>Thuật toán học tập kết hợp (ensemble) bằng nhiều cây quyết định.</p>
-        <pre><code class="language-python">RandomForestClassification(n_trees=10, ...)</code></pre>
+        <h1>Rừng ngẫu nhiên (RandomForest Classification & Regression)</h1>
+        <p>Thuật toán học tập kết hợp (ensemble) bằng nhiều cây quyết định giúp tránh Overfitting.</p>
+        <pre><code class="language-python">from pysimpml.models import RandomForestClassification, RandomForestRegression
+
+classifier = RandomForestClassification(n_trees=10, ...)
+regressor = RandomForestRegression(n_trees=10, ...)</code></pre>
         <div id="dynamic-params"></div>
     `,
     kmeans: `
@@ -336,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderContent() {
         // Clear content perfectly
         mainContent.innerHTML = '';
-        
+
         let htmlStr = '';
         if (allDocs[currentLang] && allDocs[currentLang][currentTarget]) {
             htmlStr = allDocs[currentLang][currentTarget];
@@ -348,7 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const paramsDiv = document.getElementById('dynamic-params');
         if (paramsDiv) {
             let tablesHtml = '';
-            
+
             // Render Model Specific Params
             const mappingData = modelParams[currentTarget];
             if (mappingData) {
@@ -356,7 +374,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             // Render Standard Debug Params globally for all Models
             tablesHtml += renderTable(standardDebug, "Standard Debug Parameters");
-            
+
             paramsDiv.innerHTML = tablesHtml;
         }
 
@@ -393,7 +411,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             currentTarget = item.getAttribute('data-target');
             renderContent();
-            
+
             if (window.innerWidth <= 768) {
                 sidebar.classList.remove('open');
             }
