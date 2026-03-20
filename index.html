@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pysimpml Documentation</title>
+    <!-- Google Fonts for Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="logo">
+            <span class="icon"></span>
+            <span class="brand">pysimpml</span>
+        </div>
+        <nav class="nav-links">
+            <a href="#" class="active">Documentation</a>
+            <a href="https://github.com" target="_blank">GitHub</a>
+        </nav>
+        <select id="lang-select" class="lang-select" aria-label="Select language">
+            <option value="en">English</option>
+            <option value="vi">Tiếng Việt</option>
+        </select>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+            🌓
+        </button>
+        <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Open menu">
+            ☰
+        </button>
+    </header>
+
+    <div class="layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-group">
+                <h3 id="ui-getting-started">Getting Started</h3>
+                <ul>
+                    <li><a href="#" data-target="introduction" class="nav-item active" id="ui-intro">Introduction</a></li>
+                    <li><a href="#" data-target="quickstart" class="nav-item" id="ui-quickstart">Quickstart</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-group">
+                <h3 id="ui-supervised">Supervised Learning</h3>
+                <ul>
+                    <li><a href="#" data-target="linear_regression" class="nav-item" id="ui-linear">Linear Regression</a></li>
+                    <li><a href="#" data-target="logistic_regression" class="nav-item" id="ui-logistic">Logistic Regression</a></li>
+                    <li><a href="#" data-target="knn" class="nav-item" id="ui-knn">K-Nearest Neighbors</a></li>
+                    <li><a href="#" data-target="decision_tree" class="nav-item" id="ui-tree">Decision Tree</a></li>
+                    <li><a href="#" data-target="random_forest" class="nav-item" id="ui-forest">Random Forest</a></li>
+                    <li><a href="#" data-target="neural_network" class="nav-item" id="ui-nn">Neural Network</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-group">
+                <h3 id="ui-unsupervised">Unsupervised Learning</h3>
+                <ul>
+                    <li><a href="#" data-target="kmeans" class="nav-item" id="ui-kmeans">K-Means Clustering</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="content-area">
+            <div class="content" id="main-content">
+                <!-- Dynamic content injected by JS -->
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
