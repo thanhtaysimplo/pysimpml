@@ -57,45 +57,47 @@ const standardDebug = [
 
 const modelParams = {
     linear_regression: [
-        ['lr', 'float', 'Learning rate'],
-        ['epochs', 'int', 'Total training iterations'],
-        ['out_loss', 'bool', 'Show training loss'],
-        ['out_gradient', 'bool', 'Show gradients during backprop'],
-        ['out_update', 'bool', 'Show weight updates'],
-        ['out_epoch', 'bool', 'Show epoch progress info'],
-        ['loss_step', 'int', 'Steps between loss logging'],
-        ['loss_csv', 'bool', 'Save loss to CSV file']
+        ['lr', 'float', 'Learning rate (def: 0.01)'],
+        ['epochs', 'int', 'Total training iterations (def: 1000)'],
+        ['tol', 'float', 'Convergence tolerance (def: 1e-6)'],
+        ['criterion', 'str', "Loss function: 'mse' or 'mae'"],
+        ['normalize', 'bool', 'Normalize input data (def: True)'],
+        ['log_train_csv', 'bool', 'Save training log to CSV'],
+        ['train_csv_file', 'str', 'Training log filename (def: linear_training_log.csv)'],
+        ['log_csv', 'bool', 'Save prediction results to CSV'],
+        ['csv_file', 'str', 'Prediction results filename (def: linear_predict_results.csv)']
     ],
     logistic_regression: [
-        ['lr', 'float', 'Learning rate'],
-        ['epochs', 'int', 'Total training iterations'],
-        ['out_loss', 'bool', 'Show training loss'],
-        ['out_gradient', 'bool', 'Show gradients during backprop'],
-        ['out_update', 'bool', 'Show weight updates'],
-        ['out_epoch', 'bool', 'Show epoch progress info'],
-        ['loss_step', 'int', 'Steps between loss logging'],
-        ['loss_csv', 'bool', 'Save loss to CSV file']
+        ['lr', 'float', 'Learning rate (def: 0.01)'],
+        ['epochs', 'int', 'Total training iterations (def: 1000)'],
+        ['tol', 'float', 'Convergence tolerance (def: 1e-6)'],
+        ['normalize', 'bool', 'Normalize input data (def: True)'],
+        ['log_train_csv', 'bool', 'Save training log to CSV'],
+        ['train_csv_file', 'str', 'Training log filename (def: logistic_training_log.csv)'],
+        ['log_csv', 'bool', 'Save prediction results to CSV'],
+        ['csv_file', 'str', 'Prediction results filename (def: logistic_predict_results.csv)']
     ],
     knn: [
-        ['k', 'int', 'Number of neighbors'],
-        ['weights', 'str', 'uniform | distance'],
-        ['out_neighbor', 'bool', 'Show nearest neighbors'],
-        ['out_distance', 'bool', 'Show distances'],
-        ['out_loss', 'bool', 'Show error']
+        ['k', 'int', 'Number of neighbors (def: 5)'],
+        ['distance', 'str', "Distance metric (def: 'euclidean')"],
+        ['weights', 'str', "'uniform' or 'distance'"],
+        ['p', 'int', 'Power parameter for Minkowski (def: 2)'],
+        ['log_csv', 'bool', 'Save results to CSV'],
+        ['csv_file', 'str', 'CSV filename (Classification: KNN_classification_results.csv / Regression: KNN_regression_results.csv)']
     ],
     decision_tree: [
-        ['criterion', 'str', "'gini' (Class) or 'mse' (Reg)"],
+        ['criterion', 'str', "'gini' (Classification) or 'mse' (Regression)"],
         ['max_depth', 'int / None', 'Maximum depth of the tree'],
-        ['min_samples_split', 'int', 'Min samples to split internal node (def: 2)'],
+        ['min_samples_split', 'int', 'Min samples to split node (def: 2)'],
         ['min_samples_leaf', 'int', 'Min samples per leaf (def: 1)'],
-        ['max_features', 'int / None', 'Max features to consider for best split'],
-        ['ccp_alpha', 'float', 'Complexity parameter for pruning (def: 0.0)'],
-        ['splitter', 'str', "Split strategy, e.g., 'best'"],
+        ['max_features', 'int / None', 'Max features for best split'],
+        ['ccp_alpha', 'float', 'Pruning complexity parameter (def: 0.0, Classification only)'],
+        ['splitter', 'str', "Split strategy (def: 'best', Classification only)"],
         ['random_state', 'int / None', 'Seed for randomness'],
-        ['loss', 'bool', 'Show training loss'],
-        ['loss_csv', 'bool', 'Save training process to CSV'],
-        ['errors', 'bool', 'Print prediction errors'],
-        ['errors_csv', 'bool', 'Save prediction errors to CSV']
+        ['log_build_csv', 'bool', 'Save tree building log to CSV'],
+        ['build_csv_file', 'str', 'Build log filename'],
+        ['log_predict_csv', 'bool', 'Save prediction results to CSV'],
+        ['predict_csv_file', 'str', 'Prediction results filename']
     ],
     random_forest: [
         ['n_trees', 'int', 'Number of trees (def: 10)'],
@@ -104,16 +106,20 @@ const modelParams = {
         ['min_samples_leaf', 'int', 'Min samples per leaf (def: 1)'],
         ['max_features', 'int / None', 'Features per split'],
         ['random_state', 'int / None', 'Seed for randomness'],
-        ['out_tree_train', 'bool', 'Show training process of each tree'],
-        ['out_vote', 'bool', 'Show voting process (Classification)'],
-        ['vote_csv', 'bool', 'Save votes to CSV (Classification)'],
-        ['out_value', 'bool', 'Show averaging process (Regression)'],
-        ['value_csv', 'bool', 'Save regression outputs to CSV (Regression)']
+        ['log_vote_csv', 'bool', 'Save voting log to CSV (Classification)'],
+        ['vote_csv_file', 'str', 'Vote log filename (def: rf_vote_log.csv, Classification)'],
+        ['log_tree_output', 'bool', 'Log individual tree outputs (Regression)'],
+        ['log_csv', 'bool', 'Save prediction results to CSV'],
+        ['csv_file', 'str', 'Prediction results filename']
     ],
     kmeans: [
-        ['k', 'int', 'Number of clusters'],
-        ['max_iter', 'int', 'Maximum iterations'],
-        ['out_centroid', 'bool', 'Show centroids at each step']
+        ['k', 'int', 'Number of clusters (def: 3)'],
+        ['max_iter', 'int', 'Maximum iterations (def: 300)'],
+        ['tol', 'float', 'Convergence tolerance (def: 1e-4)'],
+        ['init', 'str', "Initialization method (def: 'random')"],
+        ['random_state', 'int / None', 'Seed for randomness'],
+        ['log_csv', 'bool', 'Save results to CSV'],
+        ['csv_file', 'str', 'CSV filename (def: KMEAN_results.csv)']
     ],
     neural_network: [
         ['layers', 'list', 'Network structure'],
