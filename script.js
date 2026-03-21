@@ -8,9 +8,15 @@ const uiLabels = {
         'ui-unsupervised': 'Unsupervised Learning',
         'ui-linear': 'Linear Regression',
         'ui-logistic': 'Logistic Regression',
+        'ui-ridge-lasso': 'Ridge, Lasso & ElasticNet',
         'ui-knn': 'KNN',
+        'ui-naive-bayes': 'Naive Bayes',
+        'ui-svm': 'Support Vector Machine (SVM)',
         'ui-tree': 'Decision Tree',
         'ui-forest': 'Random Forest',
+        'ui-gb': 'Gradient Boosting',
+        'ui-adaboost': 'AdaBoost',
+        'ui-xgboost': 'XGBoost / LightGBM / CatBoost',
         'ui-nn': 'Neural Network',
         'ui-kmeans': 'K-Means Clustering'
     },
@@ -22,9 +28,15 @@ const uiLabels = {
         'ui-unsupervised': 'Học không giám sát',
         'ui-linear': 'Hồi quy tuyến tính (Linear)',
         'ui-logistic': 'Hồi quy Logistic',
+        'ui-ridge-lasso': 'Hồi quy Ridge, Lasso & ElasticNet',
         'ui-knn': 'KNN',
+        'ui-naive-bayes': 'Naive Bayes',
+        'ui-svm': 'Máy véctơ hỗ trợ (SVM)',
         'ui-tree': 'Cây quyết định (Tree)',
         'ui-forest': 'Rừng ngẫu nhiên (Forest)',
+        'ui-gb': 'Tăng cường Gradient (GB)',
+        'ui-adaboost': 'AdaBoost',
+        'ui-xgboost': 'XGBoost / LightGBM / CatBoost',
         'ui-nn': 'Mạng nơ ron (Neural Network)',
         'ui-kmeans': 'Phân cụm K-Means'
     }
@@ -201,6 +213,11 @@ print("R2 Score:", score)</code></pre>
         <div class="method-block"><h4>predict(X)</h4><p>Predict class labels for samples in X. Threshold is 0.5.</p></div>
         <div class="method-block"><h4>score(X, y)</h4><p>Return the mean accuracy on the given test data.</p></div>
     `,
+    ridge_lasso_elastic: `
+        <h1>Ridge, Lasso & ElasticNet</h1>
+        <p>Regularized linear regression models featuring L1 (Lasso) and L2 (Ridge) penalties.</p>
+        <h2><em>Update coming soon...</em></h2>
+    `,
     knn: `
         <h1>K-Nearest Neighbors (Classification & Regression)</h1>
         <p>Models implementing the k-nearest neighbors algorithm for classification (majority vote) and regression (averaging).</p>
@@ -213,6 +230,16 @@ regressor = KNNRegression(k=5, ...)</code></pre>
         <div class="method-block"><h4>fit(X, y)</h4><p>Store the training data.</p></div>
         <div class="method-block"><h4>predict(X)</h4><p>Predict targets by finding the k-nearest neighbors.</p></div>
         <div class="method-block"><h4>score(X, y)</h4><p>Return the accuracy or R2 score.</p></div>
+    `,
+    naive_bayes: `
+        <h1>Naive Bayes</h1>
+        <p>Probabilistic classifiers based on applying Bayes' theorem (GaussianNB, MultinomialNB, BernoulliNB).</p>
+        <h2><em>Update coming soon...</em></h2>
+    `,
+    svm: `
+        <h1>Support Vector Machine (SVM)</h1>
+        <p>Support Vector Classification (SVC) and Regression (SVR) using robust margin boundaries.</p>
+        <h2><em>Update coming soon...</em></h2>
     `,
     decision_tree: `
         <h1>DecisionTree (Classification & Regression)</h1>
@@ -239,6 +266,21 @@ regressor = RandomForestRegression(n_trees=10, ...)</code></pre>
         <div class="method-block"><h4>fit(X, y)</h4><p>Build a forest of trees from the training set.</p></div>
         <div class="method-block"><h4>predict(X)</h4><p>Predict class or regression value for X.</p></div>
         <div class="method-block"><h4>score(X, y)</h4><p>Return the accuracy or R2 score.</p></div>
+    `,
+    gradient_boosting: `
+        <h1>Gradient Boosting</h1>
+        <p>Ensemble technique building sequentially better decision trees (GradientBoostingClassifier / Regressor).</p>
+        <h2><em>Update coming soon...</em></h2>
+    `,
+    adaboost: `
+        <h1>AdaBoost</h1>
+        <p>Adaptive Boosting meta-algorithm modifying weights of misclassified data points sequentially.</p>
+        <h2><em>Update coming soon...</em></h2>
+    `,
+    xgboost: `
+        <h1>Advanced Boosting Trees</h1>
+        <p>XGBoost, LightGBM, and CatBoost high-performance scalable algorithms.</p>
+        <h2><em>Update coming soon...</em></h2>
     `,
     kmeans: `
         <h1>Kmean</h1>
@@ -329,6 +371,11 @@ print("R2 Score:", score)</code></pre>
         <div class="method-block"><h4>predict(X)</h4><p>Dự đoán nhãn lớp cho các mẫu trong X. Ngưỡng (Threshold) = 0.5.</p></div>
         <div class="method-block"><h4>score(X, y)</h4><p>Trả về độ chính xác trung bình (Accuracy).</p></div>
     `,
+    ridge_lasso_elastic: `
+        <h1>Hồi quy Ridge, Lasso & ElasticNet</h1>
+        <p>Các mô hình hồi quy tuyến tính bổ sung hình phạt quy chuẩn L1 (Lasso) và L2 (Ridge) để tránh overfitting.</p>
+        <h2><em>Sắp cập nhật...</em></h2>
+    `,
     knn: `
         <h1>K-Láng giềng gần (KNN Classification & Regression)</h1>
         <p>Hai mô hình triển khai thuật toán K-Nearest Neighbors để phân loại nhãn (vote) và hồi quy dự báo số nguyên (tính số trung bình).</p>
@@ -341,6 +388,16 @@ regressor = KNNRegression(k=5, ...)</code></pre>
         <div class="method-block"><h4>fit(X, y)</h4><p>Lưu trữ dữ liệu huấn luyện.</p></div>
         <div class="method-block"><h4>predict(X)</h4><p>Dự đoán nhãn hoặc giá trị bằng cách tìm k láng giềng gần nhất.</p></div>
         <div class="method-block"><h4>score(X, y)</h4><p>Trả về điểm đánh giá r2 score hoặc accuracy.</p></div>
+    `,
+    naive_bayes: `
+        <h1>Naive Bayes</h1>
+        <p>Bộ phân loại dựa trên lý thuyết xác suất Bayes (bao gồm GaussianNB, MultinomialNB và BernoulliNB).</p>
+        <h2><em>Sắp cập nhật...</em></h2>
+    `,
+    svm: `
+        <h1>Máy véctơ hỗ trợ (SVM)</h1>
+        <p>Thuật toán phân loại Margin tối đa (SVC) và Margin mềm (SVR) trên các siêu phẳng tọa độ đa chiều.</p>
+        <h2><em>Sắp cập nhật...</em></h2>
     `,
     decision_tree: `
         <h1>Cây Quyết định (DecisionTree Classification & Regression)</h1>
@@ -367,6 +424,21 @@ regressor = RandomForestRegression(n_trees=10, ...)</code></pre>
         <div class="method-block"><h4>fit(X, y)</h4><p>Xây dựng một rừng các cây quyết định ngẫu nhiên.</p></div>
         <div class="method-block"><h4>predict(X)</h4><p>Dự đoán dựa trên tổng hợp (vote hoặc biểu quyết) các cây.</p></div>
         <div class="method-block"><h4>score(X, y)</h4><p>Trả về điểm đánh giá r2 score hoặc accuracy.</p></div>
+    `,
+    gradient_boosting: `
+        <h1>Gradient Boosting</h1>
+        <p>Thuật toán học tập Ensemble mạnh mẽ xây dựng tầng lớp cây quyết định sau sửa lỗi cho cây trước (Classifier/Regressor).</p>
+        <h2><em>Sắp cập nhật...</em></h2>
+    `,
+    adaboost: `
+        <h1>AdaBoost</h1>
+        <p>Thuật toán Adaptive Boosting thích ứng trọng số các điểm dữ liệu bị phân loại sai để hội tụ điểm nhìn.</p>
+        <h2><em>Sắp cập nhật...</em></h2>
+    `,
+    xgboost: `
+        <h1>Cây Boosting Tiên tiến</h1>
+        <p>Tập hợp các thư viện Gradient Boosting đỉnh cao như XGBoost, LightGBM và CatBoost.</p>
+        <h2><em>Sắp cập nhật...</em></h2>
     `,
     kmeans: `
         <h1>Phân cụm K-Means (Kmean)</h1>
